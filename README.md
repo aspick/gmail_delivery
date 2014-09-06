@@ -7,7 +7,7 @@ Use Gmail API for ActoinMailer deliver! method
 
 Add this line to your application's Gemfile:
 
-    gem 'gmail_delivery', require: 'gmail_delivery/railtie'
+    gem 'gmail_delivery', github: 'aspick/gmail_delivery', require: 'gmail_delivery/railtie'
 
 And then execute:
 
