@@ -11,7 +11,7 @@ module GmailDelivery
 				:refresh_token
 			].each do |key|
 				certs[key] = Rails.application.config.gmail_delivery.send(key)
-				raise "No #{key.to_s}" unless certs[key]
+				raise "No #{key.to_s}" if certs[key] == nil and (key != :refresh_token and options[:auto_fetch])
 			end
 			client_id = Rails.application.config.gmail_delivery
 
