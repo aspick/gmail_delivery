@@ -11,32 +11,41 @@ Add this line to your application's Gemfile:
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
 ## Usage
 
-1. Install Initializer file
+1.Install Initializer file
+ 
 
-	$ rails g gmail_delivery
 
-2. Create Project on your [Google Developers Console](https://console.developers.google.com/)
-3. Enable Gmail API on APIs & auth -> APIs menu
-4. Create Client ID for native applicatoin on APIs & auth -> Credentials menu
-5. Set Client ID and Client Secret
+    $ rails g gmail_delivery
 
-	# on config/environments/development.rb
-	...
-	config.gmail_delivery.client_id = # Client ID #
-	config.gmail_delivery.client_secret = # Client Secret #
-	...
+2.Create Project on your [Google Developers Console](https://console.developers.google.com/)
 
-6. Fetch Refresh Token
+3.Enable Gmail API on APIs & auth -> APIs menu
+
+4.Create Client ID for native applicatoin on APIs & auth -> Credentials menu
+
+5.Set Client ID and Client Secret:
+
+
+
+on config/environments/development.rb
+    
+    ...
+    config.gmail_delivery.client_id = # Client ID #
+    config.gmail_delivery.client_secret = # Client Secret #
+    ...
+
+6.Fetch Refresh Token
 
 	$ rake gmail_delivery:fetch_refresh_token
 
-7. Set Refresh Token
+7.Set Refresh Token
 
-	# on config/environments/development.rb
+on config/environments/development.rb
+
 	...
 	config.gmail_delivery.refresh_token = # Refresh Token #
 	...
