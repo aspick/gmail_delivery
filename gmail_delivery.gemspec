@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = GmailDelivery::VERSION
   s.authors     = ["aspick"]
   s.email       = ["info@aspick.net"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of GmailDelivery."
-  s.description = "TODO: Description of GmailDelivery."
+  s.homepage    = "https://github.com/aspick/gmail_delivery"
+  s.summary     = "Use Gmail API for ActoinMailer deliver! method"
+  s.description = "Use Gmail API for ActoinMailer deliver! method"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
