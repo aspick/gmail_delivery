@@ -1,5 +1,6 @@
 require "gmail_delivery/version"
 require 'google/api_client'
+require 'gmail_delivery/railtie' if defined?(Rails)
 
 module GmailDelivery
 	class Sender

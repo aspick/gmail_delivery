@@ -14,4 +14,7 @@ module GmailDelivery
 			load 'tasks/gmail_delivery_tasks.rake'
 		end
 	end
+
+	def self.eager_load!
+	end
 end
