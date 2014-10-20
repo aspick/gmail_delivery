@@ -36,6 +36,7 @@ And then execute:
 on config/environments/development.rb
     
     ...
+    config.action_mailer.delivery_method = :gmail
     config.gmail_delivery.client_id = # Client ID #
     config.gmail_delivery.client_secret = # Client Secret #
     ...
