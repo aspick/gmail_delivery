@@ -1,5 +1,6 @@
 require "gmail_delivery/version"
-require 'google/api_client'
+require 'google/apis/gmail_v1'
+require 'signet/oauth_2/client'
 require 'gmail_delivery/railtie' if defined?(Rails)
 
 module GmailDelivery
@@ -14,19 +15,21 @@ module GmailDelivery
 				certs[key] = Rails.application.config.gmail_delivery.send(key)
 				raise "No #{key.to_s}" if certs[key] == nil and (key != :refresh_token and options[:auto_fetch])
 			end
-			client_id = Rails.application.config.gmail_delivery
 
-			@client = Google::APIClient.new(
-				application_name: 'Gmail Delivary',
-				application_version: VERSION
+			client = Signet::OAuth2::Client.new(
+			  authorization_uri: 		'https://accounts.google.com/o/oauth2/auth',
+			  token_credential_uri: 'https://www.googleapis.com/oauth2/v3/token',
+			  client_id: 						certs[:client_id],
+			  client_secret: 				certs[:client_secret],
+			  scope:								'https://mail.google.com/',
+				refresh_token:				certs[:refresh_token]
 			)
 
-			@client.authorization.client_id = certs[:client_id]
-			@client.authorization.client_secret = certs[:client_secret]
-			@client.authorization.refresh_token = certs[:refresh_token]
-			@client.authorization.fetch_access_token! unless options[:auto_fetch] == false
+			client.fetch_access_token! unless options[:auto_fetch] == false
 
-			@gmail = @client.discovered_api('gmail','v1')
+			@client = Google::Apis::GmailV1::GmailService.new
+			@client.authorization = client
+			@client
 		end
 
 		attr_accessor :client
@@ -36,29 +39,18 @@ module GmailDelivery
 				@client.authorization.update!
 			end
 
-			result = @client.execute(
-				api_method: gmail_send_method,
-				parameters: {'userId' => 'me'},
-				body_object:{
-					raw: encode_mail(mail)
-				}
-			)
-
-			result
+			@client.send_user_message('me', gmail_message_object(mail))
 		end
 
 		def settings
 			Rails.application.config.gmail_delivery
 		end
 
+
 		private
 
-		def gmail_send_method
-			@gmail.users.messages.discovered_methods.find{|m| m.name == 'send'}
-		end
-
-		def encode_mail(mail)
-			Base64.urlsafe_encode64(mail.to_s)
+		def gmail_message_object(mail)
+			Google::Apis::GmailV1::Message.new(raw: mail.encoded)
 		end
 	end
 end

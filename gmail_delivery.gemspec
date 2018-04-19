@@ -18,7 +18,10 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 5.1"
-  s.add_dependency "google-api-client", '~> 0.7.1'
+  s.add_dependency "google-api-client", '~> 0.11'
+  s.add_dependency "signet"
+  s.add_dependency "googleauth"
+  s.add_dependency "launchy"
 
   s.add_development_dependency "sqlite3"
 end
